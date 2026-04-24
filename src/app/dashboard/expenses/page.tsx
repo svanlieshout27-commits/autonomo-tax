@@ -80,7 +80,7 @@ export default async function ExpensesPage() {
                   <th>{t('expenses.colCategory')}</th>
                   <th>{t('expenses.colAmount')}</th>
                   <th>{t('expenses.colDeductible')}</th>
-                  <th>Acciones</th>
+                  <th>{t('common.actions')}</th>
                 </tr>
               </thead>
               <tbody>

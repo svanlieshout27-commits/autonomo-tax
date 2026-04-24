@@ -88,7 +88,7 @@ export default async function InvoicesPage() {
                   <th>{t('invoices.colVat')}</th>
                   <th>{t('invoices.colTotal')}</th>
                   <th>{t('invoices.colStatus')}</th>
-                  <th>Acciones</th>
+                  <th>{t('common.actions')}</th>
                 </tr>
               </thead>
               <tbody>

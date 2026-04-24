@@ -4,6 +4,14 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
+import { getT, DEFAULT_LOCALE, type Locale, LOCALES } from '@/lib/locales'
+
+function getClientLocale(): Locale {
+  if (typeof document === 'undefined') return DEFAULT_LOCALE
+  const match = document.cookie.match(/(?:^|;\s*)lang=([^;]+)/)
+  const lang = match?.[1]
+  return (LOCALES.some(l => l.code === lang) ? lang as Locale : DEFAULT_LOCALE)
+}
 
 interface Props {
   invoiceId: string
@@ -13,9 +21,10 @@ interface Props {
 export default function InvoiceRowActions({ invoiceId, invoiceNumber }: Props) {
   const router = useRouter()
   const [deleting, setDeleting] = useState(false)
+  const t = getT(getClientLocale())
 
   async function handleDelete() {
-    if (!confirm(`¿Eliminar la factura ${invoiceNumber}? Esta acción no se puede deshacer.`)) return
+    if (!confirm(`${t('common.delete')} ${invoiceNumber}?`)) return
     setDeleting(true)
     await supabase.from('invoices').delete().eq('id', invoiceId)
     router.refresh()
@@ -38,7 +47,6 @@ export default function InvoiceRowActions({ invoiceId, invoiceNumber }: Props) {
 
   return (
     <div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
-      {/* PDF download */}
       <a
         href={`/api/invoices/${invoiceId}/pdf`}
         target="_blank"
@@ -47,22 +55,18 @@ export default function InvoiceRowActions({ invoiceId, invoiceNumber }: Props) {
       >
         PDF ↓
       </a>
-
-      {/* Edit */}
       <Link
         href={`/dashboard/invoices/${invoiceId}/edit`}
         style={{ ...btnBase, background: '#F1F5F9', color: '#475569' }}
       >
-        Editar
+        {t('common.edit')}
       </Link>
-
-      {/* Delete */}
       <button
         onClick={handleDelete}
         disabled={deleting}
         style={{ ...btnBase, background: deleting ? '#FEE2E2' : '#FEF2F2', color: '#EF4444', opacity: deleting ? 0.6 : 1 }}
       >
-        {deleting ? '…' : 'Eliminar'}
+        {deleting ? '…' : t('common.delete')}
       </button>
     </div>
   )

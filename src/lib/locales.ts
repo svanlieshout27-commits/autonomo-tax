@@ -78,7 +78,7 @@ const translations: Record<Locale, Record<string, any>> = {
       modelo: 'Modelo 303 (IVA) + Modelo 130 (IRPF)',
       q1deadline: '30 abril', q2deadline: '20 julio', q3deadline: '20 octubre', q4deadline: '30 enero',
     },
-    common: { language: 'Idioma', back: '← Volver' },
+    common: { language: 'Idioma', back: '← Volver', actions: 'Acciones', edit: 'Editar', delete: 'Eliminar' },
   },
   en: {
     nav: { dashboard: 'Dashboard', invoices: 'Invoices', expenses: 'Expenses', tax: 'Tax', settings: 'Settings' },
@@ -144,7 +144,7 @@ const translations: Record<Locale, Record<string, any>> = {
       modelo: 'Form 303 (VAT) + Form 130 (Income Tax)',
       q1deadline: '30 April', q2deadline: '20 July', q3deadline: '20 October', q4deadline: '30 January',
     },
-    common: { language: 'Language', back: '← Back' },
+    common: { language: 'Language', back: '← Back', actions: 'Actions', edit: 'Edit', delete: 'Delete' },
   },
   nl: {
     nav: { dashboard: 'Dashboard', invoices: 'Facturen', expenses: 'Kosten', tax: 'Belasting', settings: 'Instellingen' },
@@ -210,7 +210,7 @@ const translations: Record<Locale, Record<string, any>> = {
       modelo: 'Formulier 303 (BTW) + Formulier 130 (Inkomstenbelasting)',
       q1deadline: '30 april', q2deadline: '20 juli', q3deadline: '20 oktober', q4deadline: '30 januari',
     },
-    common: { language: 'Taal', back: '← Terug' },
+    common: { language: 'Taal', back: '← Terug', actions: 'Acties', edit: 'Bewerken', delete: 'Verwijderen' },
   },
   ca: {
     nav: { dashboard: 'Tauler', invoices: 'Factures', expenses: 'Despeses', tax: 'Impostos', settings: 'Configuració' },
@@ -276,7 +276,7 @@ const translations: Record<Locale, Record<string, any>> = {
       modelo: 'Model 303 (IVA) + Model 130 (IRPF)',
       q1deadline: "30 d'abril", q2deadline: '20 de juliol', q3deadline: "20 d'octubre", q4deadline: '30 de gener',
     },
-    common: { language: 'Idioma', back: '← Tornar' },
+    common: { language: 'Idioma', back: '← Tornar', actions: 'Accions', edit: 'Editar', delete: 'Eliminar' },
   },
   de: {
     nav: { dashboard: 'Dashboard', invoices: 'Rechnungen', expenses: 'Ausgaben', tax: 'Steuern', settings: 'Einstellungen' },
@@ -342,7 +342,7 @@ const translations: Record<Locale, Record<string, any>> = {
       modelo: 'Formular 303 (MwSt.) + Formular 130 (Einkommensteuer)',
       q1deadline: '30. April', q2deadline: '20. Juli', q3deadline: '20. Oktober', q4deadline: '30. Januar',
     },
-    common: { language: 'Sprache', back: '← Zurück' },
+    common: { language: 'Sprache', back: '← Zurück', actions: 'Aktionen', edit: 'Bearbeiten', delete: 'Loschen' },
   },
   fr: {
     nav: { dashboard: 'Tableau de bord', invoices: 'Factures', expenses: 'Dépenses', tax: 'Impôts', settings: 'Paramètres' },
@@ -408,7 +408,7 @@ const translations: Record<Locale, Record<string, any>> = {
       modelo: 'Formulaire 303 (TVA) + Formulaire 130 (Impôt sur le revenu)',
       q1deadline: '30 avril', q2deadline: '20 juillet', q3deadline: '20 octobre', q4deadline: '30 janvier',
     },
-    common: { language: 'Langue', back: '← Retour' },
+    common: { language: 'Langue', back: '← Retour', actions: 'Actions', edit: 'Modifier', delete: 'Supprimer' },
   },
   it: {
     nav: { dashboard: 'Dashboard', invoices: 'Fatture', expenses: 'Spese', tax: 'Tasse', settings: 'Impostazioni' },
@@ -474,7 +474,7 @@ const translations: Record<Locale, Record<string, any>> = {
       modelo: "Modulo 303 (IVA) + Modulo 130 (Ritenuta d'acconto)",
       q1deadline: '30 aprile', q2deadline: '20 luglio', q3deadline: '20 ottobre', q4deadline: '30 gennaio',
     },
-    common: { language: 'Lingua', back: '← Indietro' },
+    common: { language: 'Lingua', back: '← Indietro', actions: 'Azioni', edit: 'Modifica', delete: 'Elimina' },
   },
 }
 
