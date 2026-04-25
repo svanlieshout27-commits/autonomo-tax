@@ -24,10 +24,14 @@ export default async function TaxPage() {
   const { userId } = await auth()
   const { t } = await getServerT()
 
-  const [{ data: invoices }, { data: expenses }] = await Promise.all([
+  const [{ data: invoices }, { data: expenses }, { data: settings }] = await Promise.all([
     supabase.from('invoices').select('*').eq('user_id', userId!),
     supabase.from('expenses').select('*').eq('user_id', userId!),
+    supabase.from('user_settings').select('ss_monthly_quota').eq('user_id', userId!).single(),
   ])
+
+  const ssMonthlyQuota: number = (settings as any)?.ss_monthly_quota ?? 294
+  const ssQuarterly = ssMonthlyQuota * 3
 
   const now = new Date()
   const currentYear = now.getFullYear()
@@ -61,6 +65,7 @@ export default async function TaxPage() {
   const yearIva    = quarters.reduce((s, q) => s + q.ivaOwed, 0)
   const yearIrpf   = quarters.reduce((s, q) => s + q.irpfHeld, 0)
   const yearExp    = quarters.reduce((s, q) => s + q.totalExp, 0)
+  const yearSS     = ssMonthlyQuota * 12
 
   return (
     <div style={{ padding: '32px 36px', maxWidth: '1100px' }}>
@@ -70,12 +75,13 @@ export default async function TaxPage() {
       </div>
 
       {/* Year totals */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '14px', marginBottom: '32px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '14px', marginBottom: '32px' }}>
         {[
-          { label: t('tax.yearIncome'),   value: fmt(yearIncome), color: 'var(--navy)', icon: '💶' },
+          { label: t('tax.yearIncome'),    value: fmt(yearIncome), color: 'var(--navy)', icon: '💶' },
           { label: t('tax.yearExpenses'), value: fmt(yearExp),    color: 'var(--navy)', icon: '🧾' },
           { label: t('tax.yearVat'),      value: fmt(yearIva),    color: '#C84B31',     icon: '📊' },
           { label: t('tax.yearIrpf'),     value: fmt(yearIrpf),   color: '#16A34A',     icon: '✅' },
+          { label: t('tax.yearSS'),       value: fmt(yearSS),     color: '#7C3AED',     icon: '🏛️' },
         ].map(k => (
           <div key={k.label} className="card" style={{ padding: '18px 20px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
@@ -158,8 +164,8 @@ export default async function TaxPage() {
                 </div>
               </div>
 
-              {/* IVA + IRPF result */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginTop: '16px' }}>
+              {/* IVA + IRPF + SS result */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', marginTop: '16px' }}>
                 <div style={{ background: ivaOwed > 0 ? '#FEF3C7' : '#DCFCE7', borderRadius: '10px', padding: '14px 18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
                     <div style={{ fontSize: '11px', fontWeight: 700, color: ivaOwed > 0 ? '#92400E' : '#14532D', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{t('tax.vatNet')}</div>
@@ -173,6 +179,13 @@ export default async function TaxPage() {
                     <div style={{ fontSize: '11px', color: '#14532D', marginTop: '2px' }}>{t('tax.irpfSub')}</div>
                   </div>
                   <div style={{ fontSize: '18px', fontWeight: 700, color: '#16A34A' }}>{fmt(irpfHeld)}</div>
+                </div>
+                <div style={{ background: '#F3F0FF', borderRadius: '10px', padding: '14px 18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div>
+                    <div style={{ fontSize: '11px', fontWeight: 700, color: '#5B21B6', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{t('tax.ssLabel')}</div>
+                    <div style={{ fontSize: '11px', color: '#5B21B6', marginTop: '2px' }}>{t('tax.ssSub')}</div>
+                  </div>
+                  <div style={{ fontSize: '18px', fontWeight: 700, color: '#7C3AED' }}>{fmt(ssQuarterly)}</div>
                 </div>
               </div>
             </div>
